@@ -25,7 +25,7 @@ curl "https://${CENTRAL_URL}/v1/auth/m2m" --silent \
       "audience": "central.stackrox.io",
       "mappings": [{
         "key": "sub",
-        "valueExpression": "repo:jmhbnz/talks.*",
+        "valueExpression": "repo:sbajaj/talks.*",
         "role":"Continuous Integration"
       }],
      "tokenExpirationDuration": "15m",
@@ -34,9 +34,7 @@ curl "https://${CENTRAL_URL}/v1/auth/m2m" --silent \
 #+end_src
 
 #+RESULTS: Lock process baseline
-#+begin_example
-{"config":{"id":"4c3c456d-60cd-4cd2-a763-59da16e45320","type":"GITHUB_ACTIONS","tokenExpirationDuration":"15m","mappings":[{"key":"sub","valueExpression":"repo:jmhbnz/talks.*","role":"Continuous Integration"}],"issuer":"https://token.actions.githubusercontent.com","traits":{"mutabilityMode":"ALLOW_MUTATE","visibility":"VISIBLE","origin":"IMPERATIVE"},"audience":"central.stackrox.io"}}
-#+end_example
+| {"config":{"id":"e7259432-82c6-4de3-96dc-2e04b362f3fa" | type:"GITHUB_ACTIONS" | tokenExpirationDuration:"15m" | mappings:[{"key":"sub" | valueExpression:"repo:sbajaj/talks.*" | role:"Continuous Integration"}] | issuer:"https://token.actions.githubusercontent.com" | traits:{"mutabilityMode":"ALLOW_MUTATE" | visibility:"VISIBLE" | origin:"IMPERATIVE"} | audience:"central.stackrox.io"}} |
 
 
 * Create github actions pipeline
@@ -75,7 +73,7 @@ jobs:
         with:
           image: ${{ steps.build-image.outputs.image }}
           tags: ${{ steps.build-image.outputs.tags }}
-          registry: quay.io/rh_ee_jablair
+          registry: quay.io/rh_ee_sbajaj
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
 
@@ -104,8 +102,8 @@ jobs:
           # Central re-encrypt terminates on the routers and doesn't negotiate h2
           GRPC_ENFORCE_ALPN_ENABLED: "false"
         run: |
-          roxctl image scan --output=table --image="quay.io/rh_ee_jablair/ubi9/ubi:v0.0.1-${{ github.sha }}"
-          roxctl image check --output=table --image="quay.io/rh_ee_jablair/ubi9/ubi:v0.0.1-${{ github.sha }}"
+          roxctl image scan --output=table --image="quay.io/rh_ee_sbajaj/ubi9/ubi:v0.0.1-${{ github.sha }}"
+          roxctl image check --output=table --image="quay.io/rh_ee_sbajaj/ubi9/ubi:v0.0.1-${{ github.sha }}"
 
   scan-deployment:
     runs-on: ubuntu-latest
