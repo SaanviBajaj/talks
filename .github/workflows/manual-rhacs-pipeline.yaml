@@ -28,7 +28,7 @@ jobs:
         with:
           image: ${{ steps.build-image.outputs.image }}
           tags: ${{ steps.build-image.outputs.tags }}
-          registry: quay.io/rh_ee_sbajaj
+          registry: quay.io/rh-ee-sbajaj
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
 
@@ -57,8 +57,8 @@ jobs:
           # Central re-encrypt terminates on the routers and doesn't negotiate h2
           GRPC_ENFORCE_ALPN_ENABLED: "false"
         run: |
-          roxctl image scan --output=table --image="quay.io/rh_ee_sbajaj/ubi9/ubi:v0.0.1-${{ github.sha }}"
-          roxctl image check --output=table --image="quay.io/rh_ee_sbajaj/ubi9/ubi:v0.0.1-${{ github.sha }}"
+          roxctl image scan --output=table --image="quay.io/rh-ee-sbajaj/ubi9/ubi:v0.0.1-${{ github.sha }}"
+          roxctl image check --output=table --image="quay.io/rh-e-sbajaj/ubi9/ubi:v0.0.1-${{ github.sha }}"
 
   scan-deployment:
     runs-on: ubuntu-latest
